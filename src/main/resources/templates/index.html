@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Weather</title>
+
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.6/css/bootstrap-theme.min.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6" layout:fragment="content">Page content
+				goes here</div>
+			<div class="col-md-3"></div>
+			<div layout:fragment="content">
+				<span th:text="|Hello ${name}|"/>, did you know that 
+				<span th:utext="${formatted}" /> is <span th:text="${formatted}" /> in
+				HTML?
+			</div>
+		</div>
+	</div>
+
+	<script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<th:block layout:fragment="scripts"></th:block>
+</body>
+</html>
