@@ -10,27 +10,28 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import main.java.com.weather.model.City;
+import main.java.com.weather.model.FiveDaysWeatherForecast;
 import main.java.com.weather.util.OpenWeatherAPIConfig;
 
 @RestController
 public class CityController {
 
 	@RequestMapping(value = "/{city}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	private @ResponseBody City getCityByURLParam(@PathVariable("city") String city) {
+	private @ResponseBody FiveDaysWeatherForecast getCityByURLParam(@PathVariable("city") String city) {
 
 		String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 
 		RestTemplate restTemplate = new RestTemplate();
-		City response = restTemplate.getForObject(URL, City.class);
+		FiveDaysWeatherForecast response = restTemplate.getForObject(URL, FiveDaysWeatherForecast.class);
 		return response;
 	}
 
 	@RequestMapping(value = "/weather", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	private @ResponseBody City getCityByPassedParam(@RequestParam(value = "city") String city) {
+	private @ResponseBody FiveDaysWeatherForecast getCityByPassedParam(@RequestParam(value = "city") String city) {
 		String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 
 		RestTemplate restTemplate = new RestTemplate();
-		City response = restTemplate.getForObject(URL, City.class);
+		FiveDaysWeatherForecast response = restTemplate.getForObject(URL, FiveDaysWeatherForecast.class);
 		return response;
 	}
 }
