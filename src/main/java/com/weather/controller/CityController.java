@@ -1,4 +1,4 @@
-package com.weather.controller;
+package main.java.com.weather.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.weather.model.City;
-import com.weather.util.OpenWeatherAPIConfig;
+import main.java.com.weather.model.City;
+import main.java.com.weather.util.OpenWeatherAPIConfig;
 
 @RestController
 public class CityController {

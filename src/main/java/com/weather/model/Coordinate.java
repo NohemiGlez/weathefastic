@@ -1,4 +1,4 @@
-package com.weather.model;
+package main.java.com.weather.model;
 
 public class Coordinate {
 

@@ -1,4 +1,4 @@
-package com.weather.util;
+package main.java.com.weather.util;
 
 public class OpenWeatherAPIConfig {
 

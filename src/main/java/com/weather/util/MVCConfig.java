@@ -1,4 +1,4 @@
-package com.weather.util;
+package main.java.com.weather.util;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
