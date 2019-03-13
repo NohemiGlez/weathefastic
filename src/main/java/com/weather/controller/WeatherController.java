@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import main.java.com.weather.model.DayForecast;
+import main.java.com.weather.model.Response;
 import main.java.com.weather.util.OpenWeatherAPIConfig;
 
 @RestController
-public class CityController {
+public class WeatherController {
 
 	@RequestMapping(value = "/{city}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	private @ResponseBody DayForecast getCityByURLParam(@PathVariable("city") String city) {
+	private @ResponseBody Response getCityByURLParam(@PathVariable("city") String city) {
 
 		String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 
 		RestTemplate restTemplate = new RestTemplate();
-		DayForecast response = restTemplate.getForObject(URL, DayForecast.class);
+		Response response = restTemplate.getForObject(URL, Response.class);
 		return response;
 	}
 
@@ -31,7 +31,7 @@ public class CityController {
 		String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 
 		RestTemplate restTemplate = new RestTemplate();
-		DayForecast response = restTemplate.getForObject(URL, DayForecast.class);
+		Response response = restTemplate.getForObject(URL, Response.class);
 		return model.addAttribute("cityName", response.getCity().getName());
 	}
 }
