@@ -4,8 +4,9 @@ public class City {
 
 	private int id;
 	private String name;
-	private Coordinate coord;
+	private Coordinates coord;
 	private String country;
+	private int population;
 
 	public int getId() {
 		return id;
@@ -23,11 +24,11 @@ public class City {
 		this.name = name;
 	}
 
-	public Coordinate getCoord() {
+	public Coordinates getCoord() {
 		return coord;
 	}
 
-	public void setCoord(Coordinate coord) {
+	public void setCoord(Coordinates coord) {
 		this.coord = coord;
 	}
 
@@ -38,4 +39,13 @@ public class City {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
+	public int getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(int population) {
+		this.population = population;
+	}
+	
 }
