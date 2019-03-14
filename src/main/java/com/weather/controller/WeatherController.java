@@ -3,6 +3,7 @@ package main.java.com.weather.controller;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
+import main.java.com.weather.model.Forecast;
 import main.java.com.weather.model.Response;
 import main.java.com.weather.util.OpenWeatherAPIConfig;
 import main.java.com.weather.util.RestTemplateMethods;
@@ -35,17 +37,17 @@ public class WeatherController {
 	}
 
 	@RequestMapping(value = "/weather", method = RequestMethod.GET)
-	private @ResponseBody void getCityByPassedParams(@RequestParam(value = "city") String city, Model model) {
+	private @ResponseBody Model getCityByPassedParams(@RequestParam(value = "city") String city, Model model) {
 
 		try {
 			String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 			Response response = RestTemplateMethods.getRestTemplate().getForObject(URL, Response.class);
 			
-			response.getList().forEach(date->System.out.println(date.getDt_txt().contains("18")));
-			response.getList().forEach(date->System.out.println(date.getMain().getTemp()));
-			response.getList().forEach(date->model.addAttribute("date", date.getDt_txt()));
+			return model.addAttribute("forecasts", response.getList());
+//			response.getList().forEach(date->System.out.println(date.getMain().getTemp()));
 		} catch (RestClientException | KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
 			e.getStackTrace().toString();
 		}
+		return null;
 	}
 }
