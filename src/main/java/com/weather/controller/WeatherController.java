@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
@@ -34,29 +35,17 @@ public class WeatherController {
 	}
 
 	@RequestMapping(value = "/weather", method = RequestMethod.GET)
-	private @ResponseBody void getCityByPassedParams(@PathVariable("city") String city, Model model) {
+	private @ResponseBody void getCityByPassedParams(@RequestParam(value = "city") String city, Model model) {
 
 		try {
 			String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 			Response response = RestTemplateMethods.getRestTemplate().getForObject(URL, Response.class);
-			model.addAttribute("date", response.getCity().toString());
+			
+			response.getList().forEach(date->System.out.println(date.getDt_txt().contains("18")));
+			response.getList().forEach(date->System.out.println(date.getMain().getTemp()));
+			response.getList().forEach(date->model.addAttribute("date", date.getDt_txt()));
 		} catch (RestClientException | KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
 			e.getStackTrace().toString();
 		}
-//		return null;
 	}
-
-//	@RequestMapping(value = "/weather", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-//	private @ResponseBody void getCityByPassedParam(@RequestParam(value = "city") String city, Model model) {
-//		String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
-//
-//		RestTemplate restTemplate = new RestTemplate();
-//		Response response = restTemplate.getForObject(URL, Response.class);
-//		for (Forecast forecast : response.getList()) {
-//			String dt_txt = (forecast.getDt_txt());
-//			if (dt_txt != null) {
-//				model.addAttribute("date", dt_txt.toString());
-//			}
-//		}
-//	}
 }

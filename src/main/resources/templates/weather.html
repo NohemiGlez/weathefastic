@@ -12,7 +12,9 @@
 </head>
 <body>
 	<h1>
-		The weather in <span th:text="${cityName}"></span> is...
+<!-- 		<div th:each="forecast : ${forecasts}"> -->
+			The weather in <span th:text="${date}"></span> is...
+<!-- 		</div> -->
 	</h1>
 	<th:block layout:fragment="scripts"></th:block>
 	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
