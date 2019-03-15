@@ -2,76 +2,76 @@ package main.java.com.weather.model;
 
 public class Main {
 
-	private int temp;
-	private int temp_min;
-	private int temp_max;
-	private int pressure;
-	private int sea_level;
-	private int grnd_level;
-	private int humidity;
-	private int temp_kf;
+	private float temp;
+	private float temp_min;
+	private float temp_max;
+	private float pressure;
+	private float sea_level;
+	private float grnd_level;
+	private float humidity;
+	private float temp_kf;
 
-	public int getTemp() {
+	public float getTemp() {
 		return temp;
 	}
 
-	public void setTemp(int temp) {
+	public void setTemp(float temp) {
 		this.temp = temp;
 	}
 
-	public int getTemp_min() {
+	public float getTemp_min() {
 		return temp_min;
 	}
 
-	public void setTemp_min(int temp_min) {
+	public void setTemp_min(float temp_min) {
 		this.temp_min = temp_min;
 	}
 
-	public int getTemp_max() {
+	public float getTemp_max() {
 		return temp_max;
 	}
 
-	public void setTemp_max(int temp_max) {
+	public void setTemp_max(float temp_max) {
 		this.temp_max = temp_max;
 	}
 
-	public int getPressure() {
+	public float getPressure() {
 		return pressure;
 	}
 
-	public void setPressure(int pressure) {
+	public void setPressure(float pressure) {
 		this.pressure = pressure;
 	}
 
-	public int getSea_level() {
+	public float getSea_level() {
 		return sea_level;
 	}
 
-	public void setSea_level(int sea_level) {
+	public void setSea_level(float sea_level) {
 		this.sea_level = sea_level;
 	}
 
-	public int getGrnd_level() {
+	public float getGrnd_level() {
 		return grnd_level;
 	}
 
-	public void setGrnd_level(int grnd_level) {
+	public void setGrnd_level(float grnd_level) {
 		this.grnd_level = grnd_level;
 	}
 
-	public int getHumidity() {
+	public float getHumidity() {
 		return humidity;
 	}
 
-	public void setHumidity(int humidity) {
+	public void setHumidity(float humidity) {
 		this.humidity = humidity;
 	}
 
-	public int getTemp_kf() {
+	public float getTemp_kf() {
 		return temp_kf;
 	}
 
-	public void setTemp_kf(int temp_kf) {
+	public void setTemp_kf(float temp_kf) {
 		this.temp_kf = temp_kf;
 	}
 
