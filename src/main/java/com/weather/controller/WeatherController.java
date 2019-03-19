@@ -3,15 +3,11 @@ package main.java.com.weather.controller;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -32,8 +28,31 @@ import main.java.com.weather.util.RestTemplateMethods;
 public class WeatherController {
 
 	int forecast_day_counter = 0;
-	float temperature_average = 0;
+	float temperature_average, temperature_sum = 0;
 	String current_temperature, temperature_max, temperature_min;
+	String day_number;
+
+	private void addCalendarDay(int day_counter) {
+		Date current_date = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(current_date);
+		c.add(Calendar.DATE, day_counter);
+		Date current_date_plus_one = c.getTime();
+		day_number = new SimpleDateFormat("yyyy-MM-dd").format(current_date_plus_one);
+	}
+
+	private void getCurrentTemp(Response response) {
+		current_temperature = String.valueOf(response.getList().iterator().next().getMain().getTemp());
+		temperature_min = String.valueOf(response.getList().iterator().next().getMain().getTemp_min());
+		temperature_max = String.valueOf(response.getList().iterator().next().getMain().getTemp_max());
+	}
+
+	private void sendCurrentTempToView(Response response, Model model) {
+		model.addAttribute("city", response.getCity().getName());
+		model.addAttribute("current_temperature", current_temperature);
+		model.addAttribute("min_temperature", temperature_min);
+		model.addAttribute("max_temperature", temperature_max);
+	}
 
 	@RequestMapping(value = "/{city}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	private @ResponseBody Response getCityByURLParam(@PathVariable("city") String city) {
@@ -55,42 +74,28 @@ public class WeatherController {
 			String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 			Response response = RestTemplateMethods.getRestTemplate().getForObject(URL, Response.class);
 
-			Date current_date = new Date();
-			Calendar c = Calendar.getInstance();
-			c.setTime(current_date);
-			c.add(Calendar.DATE, 1);
-			Date current_date_plus_one = c.getTime();
-			String day_number = new SimpleDateFormat("yyyy-MM-dd").format(current_date_plus_one);
-
-			DailyForecast daily_forecast = new DailyForecast();
 			List<DailyForecast> daily_forecast_list = new ArrayList<DailyForecast>();
 
-			for (int day_counter = 0; day_counter < 5; day_counter++) {
+			for (int day_counter = 1; day_counter <= 5; day_counter++) {
+				addCalendarDay(day_counter);
+
 				response.getList().forEach(forecast -> {
 					if (forecast.getDt_txt().contains(day_number)) {
-						temperature_average += forecast.getMain().getTemp();
+						temperature_sum += forecast.getMain().getTemp();
 						forecast_day_counter++;
 					}
 				});
 
+				DailyForecast daily_forecast = new DailyForecast();
 				daily_forecast.setDt_txt(day_number);
-				daily_forecast.setTemperature_average((temperature_average / forecast_day_counter));
-				System.out.println(daily_forecast.getTemperature_average());
+				temperature_average = (temperature_sum / forecast_day_counter);
+				daily_forecast.setTemperature_average(Math.round((temperature_average * 100.0) / 100.0));
 				daily_forecast_list.add(daily_forecast);
-				c.add(Calendar.DATE, day_counter);
 			}
 
-			// Current
-			current_temperature = String.valueOf(response.getList().iterator().next().getMain().getTemp());
-			temperature_min = String.valueOf(response.getList().iterator().next().getMain().getTemp_min());
-			temperature_max = String.valueOf(response.getList().iterator().next().getMain().getTemp_max());
+			getCurrentTemp(response);
+			sendCurrentTempToView(response, model);
 
-			model.addAttribute("city", response.getCity().getName());
-			model.addAttribute("current_temperature", current_temperature);
-			model.addAttribute("min_temperature", temperature_min);
-			model.addAttribute("max_temperature", temperature_max);
-
-			// List
 			model.addAttribute("daily_forecast", daily_forecast_list);
 
 		} catch (RestClientException | KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
