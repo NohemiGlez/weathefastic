@@ -54,19 +54,6 @@ public class WeatherController {
 		model.addAttribute("max_temperature", temperature_max);
 	}
 
-	@RequestMapping(value = "/{city}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	private @ResponseBody Response getCityByURLParam(@PathVariable("city") String city) {
-
-		try {
-			String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
-			Response response = RestTemplateMethods.getRestTemplate().getForObject(URL, Response.class);
-			return response;
-		} catch (RestClientException | KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
-			e.getStackTrace().toString();
-		}
-		return null;
-	}
-
 	@RequestMapping(value = "/weather", method = RequestMethod.GET)
 	private @ResponseBody Model getCityByPassedParams(@RequestParam(value = "city") String city, Model model) {
 
