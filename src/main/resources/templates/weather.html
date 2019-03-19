@@ -13,16 +13,14 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-4">
+			<div class="col-12">
+				<h1 th:text="${city}" class="text-center"></h1>
+				<h2>Current forecast (C°)</h2>
+				<span th:text="${current_temperature}"></span>
+				<p>Current</p>
+			</div>
+			<div class="col-4 w-100 p-3">
 				<div class="col-12">
-					<h1 th:text="${city}"></h1>
-					<p>Current forecast and for the next five days</p>
-					<div class="row">
-						<div class="col-12">
-							<span th:text="${current_temperature}"></span>
-							<p>Current</p>
-						</div>
-					</div>
 					<div class="row">
 						<div class="col-4">
 							<p>Min</p>
@@ -39,9 +37,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12">
-				<h2>Temperature for the next five days</h2>
-				<table class="table">
+			<div class="col-12 w-100 p-3">
+				<h2 class="text-center">Temperature for the next five days</h2>
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<td>Day</td>
@@ -52,7 +50,7 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>Temp. Avg.</td>
+							<td>Temp. Average (°C)</td>
 							<th:block th:each="daily : ${daily_forecast}">
 								<td th:text="${daily.temperature_average}"></td>
 							</th:block>
@@ -60,23 +58,7 @@
 					</tbody>
 				</table>
 			</div>
-			<!-- 			<div class="row"> -->
-			<!-- 				<div class="container"> -->
-			<!-- 					<h2>May be you would like to know the weather in...</h2> -->
-			<!-- 					<form action="/weather" method="GET" accept-charset="utf-8"> -->
-			<!-- 						<div class="row"> -->
-			<!-- 							<select class="custom-select" id="city"> -->
-			<!-- 								<option selected>Select city</option> -->
-			<!-- 								<option name="city" value="Chihuahua">Chihuahua</option> -->
-			<!-- 								<option name="city" value="Ciudad Juarez">Ciudad Juarez</option> -->
-			<!-- 								<option name="city" value="Delicias">Delicias</option> -->
-			<!-- 								<option name="city" value="Parral">Parral</option> -->
-			<!-- 							</select> -->
-			<!-- 						</div> -->
-			<!-- 						<button type="submit" class="btn btn-info">Check weather</button> -->
-			<!-- 					</form> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
+			<a href="/" class="btn btn-info">Select another city</a>
 		</div>
 	</div>
 	<th:block layout:fragment="scripts"></th:block>

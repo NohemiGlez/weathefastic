@@ -9,24 +9,30 @@
 	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" />
+<link rel="stylesheet"
+	th:href="baseStyles.css" />
 </head>
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-12">
-				<h1>Hi, welcome to Weatherfastic!</h1>
-				<p>You can check the weather of a city in Chihuahua, chih., Mex
-					only typing the city below.</p>
-			</div>
-		</div>
-		<div class="col-12">
-			<form action="/weather" method="GET" accept-charset="utf-8">
-				<div class="form-group">
-					<label for="city">City Name</label> <input type="text" id="city"
-						name="city" class="form-control" placeholder="Ciudad Juarez" />
+			<div class="col-4 bg-light full-height w-100 p-3">
+				<div class="container">
+					<h1 class="text-center">Hi, welcome to Weatherfastic!</h1>
+					<p class="text-center">You can check the weather of a city in
+						Chihuahua, chih., Mex only typing the city name.</p>
 				</div>
-				<button type="submit" class="btn btn-info">Check weather</button>
-			</form>
+			</div>
+			<div class="col-8 clouds-background full-height w-100 p-3">
+				<div class="container">
+					<form action="/weather" method="GET" accept-charset="utf-8">
+						<div class="form-group">
+							<label for="city">City Name</label> <input type="text" id="city"
+								name="city" class="form-control" placeholder="Ciudad Juarez" />
+						</div>
+						<button type="submit" class="btn btn-info">Check weather</button>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 	<th:block layout:fragment="scripts"></th:block>
