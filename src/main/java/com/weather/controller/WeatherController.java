@@ -31,7 +31,7 @@ import main.java.com.weather.util.RestTemplateMethods;
 @RestController
 public class WeatherController {
 
-	int forecast_day_counter, day_counter = 0;
+	int forecast_day_counter = 0;
 	float temperature_average = 0;
 	String current_temperature, temperature_max, temperature_min;
 
@@ -55,32 +55,32 @@ public class WeatherController {
 			String URL = OpenWeatherAPIConfig.getCityInformationURL(city);
 			Response response = RestTemplateMethods.getRestTemplate().getForObject(URL, Response.class);
 
-//			String day_number = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-//			String day_number = "2019-03-16";
-			LocalTime local_time_asia = LocalTime.now(ZoneId.of("Asia/Singapore"));
-			DateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
 			Date current_date = new Date();
-			System.out.println(date_format.format(local_time_asia));
 			Calendar c = Calendar.getInstance();
 			c.setTime(current_date);
 			c.add(Calendar.DATE, 1);
 			Date current_date_plus_one = c.getTime();
+			String day_number = new SimpleDateFormat("yyyy-MM-dd").format(current_date_plus_one);
 
 			DailyForecast daily_forecast = new DailyForecast();
 			List<DailyForecast> daily_forecast_list = new ArrayList<DailyForecast>();
 
-			response.getList().forEach(forecast -> {
-				if (forecast.getDt_txt().contains(current_date_plus_one.toString())) {
-					temperature_average += forecast.getMain().getTemp();
-					forecast_day_counter++;
-				}
-			});
+			for (int day_counter = 0; day_counter < 5; day_counter++) {
+				response.getList().forEach(forecast -> {
+					if (forecast.getDt_txt().contains(day_number)) {
+						temperature_average += forecast.getMain().getTemp();
+						forecast_day_counter++;
+					}
+				});
 
-			daily_forecast.setDt_txt(current_date_plus_one.toString());
-			daily_forecast.setTemperature_average((temperature_average / forecast_day_counter));
-			System.out.println(daily_forecast.getTemperature_average());
-			daily_forecast_list.add(daily_forecast);
+				daily_forecast.setDt_txt(day_number);
+				daily_forecast.setTemperature_average((temperature_average / forecast_day_counter));
+				System.out.println(daily_forecast.getTemperature_average());
+				daily_forecast_list.add(daily_forecast);
+				c.add(Calendar.DATE, day_counter);
+			}
 
+			// Current
 			current_temperature = String.valueOf(response.getList().iterator().next().getMain().getTemp());
 			temperature_min = String.valueOf(response.getList().iterator().next().getMain().getTemp_min());
 			temperature_max = String.valueOf(response.getList().iterator().next().getMain().getTemp_max());
@@ -89,7 +89,8 @@ public class WeatherController {
 			model.addAttribute("current_temperature", current_temperature);
 			model.addAttribute("min_temperature", temperature_min);
 			model.addAttribute("max_temperature", temperature_max);
-			model.addAttribute("current_date", current_date_plus_one);
+
+			// List
 			model.addAttribute("daily_forecast", daily_forecast_list);
 
 		} catch (RestClientException | KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {

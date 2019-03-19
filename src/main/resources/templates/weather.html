@@ -36,14 +36,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="daily : ${daily_forecast}">
-					<td th:text="${daily.temperature_average}"></td>
+				<tr>
+					<th:block th:each="daily : ${daily_forecast}">
+						<td th:text="${daily.temperature_average}"></td>
+					</th:block>
 				</tr>
 			</tbody>
 		</table>
-		<div>
-			<p>Current forecast at <span th:text="${current_date}"></span></p>
-		</div>
 	</div>
 	<th:block layout:fragment="scripts"></th:block>
 	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
