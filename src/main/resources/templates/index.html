@@ -11,24 +11,23 @@
 	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" />
 </head>
 <body>
-	<h1>Hello World!</h1>
-	<div class="row">
-		<div class="container">
-			<div class="col-md-3"></div>
-			<div class="col-md-6" layout:fragment="content">Page content
-				goes here</div>
-			<div class="col-md-3"></div>
-			<div layout:fragment="content">
-				<span th:text="|Hello ${name}|" />, did you know that <span
-					th:utext="${formatted}" /> is <span th:text="${formatted}" /> in
-				HTML?
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>Hi, welcome to Weatherfastic!</h1>
+				<p>You can check the weather of a city in Chihuahua, chih., Mex
+					only typing the city below.</p>
 			</div>
 		</div>
-		<form action="/weather" method="GET" accept-charset="utf-8">
-			<input type="text" id="city" name="city" />
-			<button type="submit">Muéstrame la respuseta de api, por favor</button>
-
-		</form>
+		<div class="col-12">
+			<form action="/weather" method="GET" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="city">City Name</label> <input type="text" id="city"
+						name="city" class="form-control" placeholder="Ciudad Juarez" />
+				</div>
+				<button type="submit" class="btn btn-info">Check weather</button>
+			</form>
+		</div>
 	</div>
 	<th:block layout:fragment="scripts"></th:block>
 	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>

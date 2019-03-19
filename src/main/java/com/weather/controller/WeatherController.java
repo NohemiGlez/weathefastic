@@ -97,7 +97,8 @@ public class WeatherController {
 			sendCurrentTempToView(response, model);
 
 			model.addAttribute("daily_forecast", daily_forecast_list);
-
+			model.addAttribute("forecast_days", daily_forecast_list);
+			
 		} catch (RestClientException | KeyManagementException | KeyStoreException | NoSuchAlgorithmException e) {
 			e.getStackTrace().toString();
 		}

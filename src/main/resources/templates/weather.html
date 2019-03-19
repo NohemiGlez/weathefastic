@@ -12,37 +12,72 @@
 </head>
 <body>
 	<div class="container">
-		<div>
-			<h1 th:text="${city}"></h1>
-			<span th:text="${current_temperature}"></span>
-			<p>Current</p>
-			<div>
-				<p>Min</p>
-				<p th:text="${min_temperature}"></p>
+		<div class="row">
+			<div class="col-4">
+				<div class="col-12">
+					<h1 th:text="${city}"></h1>
+					<p>Current forecast and for the next five days</p>
+					<div class="row">
+						<div class="col-12">
+							<span th:text="${current_temperature}"></span>
+							<p>Current</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-4">
+							<p>Min</p>
+							<p th:text="${min_temperature}"></p>
+						</div>
+						<div class="col-4">
+							<p>Max</p>
+							<p th:text="${max_temperature}"></p>
+						</div>
+						<div class="col-4">
+							<p>Max</p>
+							<p th:text="${max_temperature}"></p>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div>
-				<p>Max</p>
-				<p th:text="${max_temperature}"></p>
+			<div class="col-12">
+				<h2>Temperature for the next five days</h2>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>Day</td>
+							<th:block th:each="day_number : ${forecast_days}">
+								<td th:text="${day_number.dt_txt}"></td>
+							</th:block>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Temp. Avg.</td>
+							<th:block th:each="daily : ${daily_forecast}">
+								<td th:text="${daily.temperature_average}"></td>
+							</th:block>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+			<!-- 			<div class="row"> -->
+			<!-- 				<div class="container"> -->
+			<!-- 					<h2>May be you would like to know the weather in...</h2> -->
+			<!-- 					<form action="/weather" method="GET" accept-charset="utf-8"> -->
+			<!-- 						<div class="row"> -->
+			<!-- 							<select class="custom-select" id="city"> -->
+			<!-- 								<option selected>Select city</option> -->
+			<!-- 								<option name="city" value="Chihuahua">Chihuahua</option> -->
+			<!-- 								<option name="city" value="Ciudad Juarez">Ciudad Juarez</option> -->
+			<!-- 								<option name="city" value="Delicias">Delicias</option> -->
+			<!-- 								<option name="city" value="Parral">Parral</option> -->
+			<!-- 							</select> -->
+			<!-- 						</div> -->
+			<!-- 						<button type="submit" class="btn btn-info">Check weather</button> -->
+			<!-- 					</form> -->
+			<!-- 				</div> -->
+			<!-- 			</div> -->
 		</div>
-		<table>
-			<thead>
-				<tr>
-					<th>Day 1</th>
-					<th>Day 2</th>
-					<th>Day 3</th>
-					<th>Day 4</th>
-					<th>Day 5</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th:block th:each="daily : ${daily_forecast}">
-						<td th:text="${daily.temperature_average}"></td>
-					</th:block>
-				</tr>
-			</tbody>
-		</table>
 	</div>
 	<th:block layout:fragment="scripts"></th:block>
 	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
