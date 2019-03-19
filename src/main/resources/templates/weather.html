@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<title>Weather</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1 th:text="${city}" class="text-center"></h1>
+				<h2>Current forecast (C°)</h2>
+				<span th:text="${current_temperature}"></span>
+				<p>Current</p>
+			</div>
+			<div class="col-4 w-100 p-3">
+				<div class="col-12">
+					<div class="row">
+						<div class="col-4">
+							<p>Min</p>
+							<p th:text="${min_temperature}"></p>
+						</div>
+						<div class="col-4">
+							<p>Max</p>
+							<p th:text="${max_temperature}"></p>
+						</div>
+						<div class="col-4">
+							<p>Max</p>
+							<p th:text="${max_temperature}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 w-100 p-3">
+				<h2 class="text-center">Temperature for the next five days</h2>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<td>Day</td>
+							<th:block th:each="day_number : ${forecast_days}">
+								<td th:text="${day_number.dt_txt}"></td>
+							</th:block>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Temp. Average (°C)</td>
+							<th:block th:each="daily : ${daily_forecast}">
+								<td th:text="${daily.temperature_average}"></td>
+							</th:block>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<a href="/" class="btn btn-info">Select another city</a>
+		</div>
+	</div>
+	<th:block layout:fragment="scripts"></th:block>
+	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

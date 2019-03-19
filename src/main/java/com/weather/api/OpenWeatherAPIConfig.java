@@ -12,5 +12,4 @@ public class OpenWeatherAPIConfig {
 		cityWeatherInformationURL = baseURL + city + countryCodeURL + unitsMetricURL + appIdURL;
 		return cityWeatherInformationURL;
 	}
-
 }

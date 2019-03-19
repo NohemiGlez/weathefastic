@@ -1,11 +1,11 @@
 package main.java.com.weather.model;
 
-public class Coordinate {
+public class Coordinates {
 
 	private int lon;
 	private int lat;
 
-	public Coordinate() {
+	public Coordinates() {
 	}
 
 	public int getLon() {
